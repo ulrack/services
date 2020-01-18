@@ -1,0 +1,17 @@
+{
+    "$schema": "https://json-schema.org/draft-07/schema",
+    "definitions": {
+        "classDeclaration": {
+            "type": "string",
+            "pattern": "^(\\\\[A-z]+)+$"
+        },
+        "identifierDeclaration": {
+            "type": "string",
+            "pattern": "^[\\w-]+$"
+        },
+        "serviceDeclaration": {
+            "type": "string",
+            "pattern": "^[\\.\\w-]+$"
+        }
+    }
+}

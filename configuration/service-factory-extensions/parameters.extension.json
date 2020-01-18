@@ -1,0 +1,5 @@
+{
+    "$schema": "../schema/service.factory.extension.schema.json",
+    "class": "\\Ulrack\\Services\\Factory\\Extension\\ParametersFactory",
+    "key": "parameters"
+}

@@ -1,0 +1,40 @@
+{
+    "parameters": {
+        "validate": true,
+        "do-not-validate": false
+    },
+    "services": {
+        "validator.always-validator-true": {
+            "class": "\\Ulrack\\Validator\\Common\\ValidatorInterface",
+            "parameters": {
+                "alwaysBool": "${parameters.validate}"
+            }
+        },
+        "validator.always-validator-false": {
+            "parent": "validator.always-validator-true",
+            "parameters": {
+                "alwaysBool": "${parameters.do-not-validate}"
+            }
+        },
+        "chain-validator": {
+            "class": "\\Ulrack\\Validator\\Component\\Chain\\AndValidator",
+            "parameters": {
+                "validators": [
+                    "@{validator.always-validator-true}"
+                ]
+            }
+        },
+        "not-validator": {
+            "class": "\\Ulrack\\Validator\\Component\\Logical\\NotValidator",
+            "parameters": {
+                "validator": "@{chain-validator}"
+            }
+        }
+    },
+    "preferences": {
+        "validator.default-validator": {
+            "preference": "\\Ulrack\\Validator\\Component\\Logical\\AlwaysValidator",
+            "for": "\\Ulrack\\Validator\\Common\\ValidatorInterface"
+        }
+    }
+}

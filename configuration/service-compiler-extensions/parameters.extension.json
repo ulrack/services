@@ -1,0 +1,7 @@
+{
+    "$schema": "../schema/service.compiler.extension.schema.json",
+    "class": "\\Ulrack\\Services\\Component\\Compiler\\Extension\\ParametersCompiler",
+    "sortOrder": 0,
+    "key": "parameters",
+    "schema": true
+}

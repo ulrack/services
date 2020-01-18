@@ -1,0 +1,43 @@
+{
+    "$schema": "../schema/service.compiler.extension.schema.json",
+    "class": "\\Ulrack\\Services\\Component\\Compiler\\Extension\\ServicesCompiler",
+    "sortOrder": 2,
+    "key": "services",
+    "schema": {
+        "type": "object",
+        "oneOf": [
+            {
+                "properties": {
+                    "class": {
+                        "type": "string",
+                        "pattern": "^(\\\\[A-z]+)+$"
+                    },
+                    "parameters": {
+                        "type": "object"
+                    },
+                    "abstract": {
+                        "type": "boolean",
+                        "default": false
+                    }
+                },
+                "required": ["class"]
+            },
+            {
+                "properties": {
+                    "parent": {
+                        "type": "string",
+                        "pattern": "^[\\.\\w-]+$"
+                    },
+                    "parameters": {
+                        "type": "object"
+                    },
+                    "abstract": {
+                        "type": "boolean",
+                        "default": false
+                    }
+                },
+                "required": ["parent"]
+            }
+        ]
+    }
+}

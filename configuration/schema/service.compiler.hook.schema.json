@@ -1,0 +1,20 @@
+{
+    "$schema": "https://json-schema.org/draft-07/schema",
+    "type": "object",
+    "properties": {
+        "class": {
+            "$ref": "definitions.json#definitions/classDeclaration"
+        },
+        "sortOrder": {
+            "type": "integer",
+            "minimum": 0
+        },
+        "key": {
+            "$ref": "definitions.json#definitions/identifierDeclaration"
+        },
+        "parameters": {
+            "type": "object"
+        }
+    },
+    "required": ["class", "sortOrder", "key"]
+}

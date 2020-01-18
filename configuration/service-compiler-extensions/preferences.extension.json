@@ -1,0 +1,25 @@
+{
+    "$schema": "../schema/service.compiler.extension.schema.json",
+    "class": "\\Ulrack\\Services\\Component\\Compiler\\Extension\\PreferencesCompiler",
+    "sortOrder": 1,
+    "key": "preferences",
+    "parameters": {
+        "service_keys": {
+            "services": "class"
+        }
+    },
+    "schema": {
+        "type": "object",
+        "properties": {
+            "preference": {
+                "type": "string",
+                "pattern": "^(\\\\[A-z]+)+$"
+            },
+            "for": {
+                "type": "string",
+                "pattern": "^(\\\\[A-z]+)+$"
+            }
+        },
+        "required": ["preference", "for"]
+    }
+}
