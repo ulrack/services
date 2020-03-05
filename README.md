@@ -2,7 +2,7 @@
 
 # Ulrack Services
 
-This package contains a services implementation. 
+This package contains a services implementation.
 These services can be configured for a project to create a configured depency injection layer.
 The services are ran through a compiler to create workable data for the factories.
 The factories are used to retrieve assembled objects for the project.
@@ -22,7 +22,7 @@ composer require ulrack/services
 ### Registry
 
 To start, the [ServiceRegistry](src/Component/Registry/ServiceRegistry.php) needs to be created.
-The ServiceRegistry is the object on which all service definitions are registered, 
+The ServiceRegistry is the object on which all service definitions are registered,
 before they are compiled. To create the ServiceRegistry use the following snippet:
 ```php
 <?php
@@ -33,7 +33,7 @@ $serviceRegistry = new ServiceRegistry();
 ```
 
 The service definitions can then be registered with the `add` method.
-See the files in [configuration/schema](configuration/schema) to see everything 
+See the files in [configuration/schema](configuration/schema) to see everything
 that can be registered out of the box.
 ```php
 <?php
@@ -41,8 +41,8 @@ that can be registered out of the box.
 use Ulrack\Validator\Component\Logical\AlwaysValidator;
 
 $serviceRegistry->add(
-    'services', 
-    'foo', 
+    'services',
+    'foo',
     [
         'class' => AlwaysValidator::class,
         'parameters' => [
@@ -64,7 +64,7 @@ use Ulrack\ObjectFactory\Factory\ObjectFactory;
 use Ulrack\Services\Component\Compiler\ServiceCompiler;
 use Ulrack\Storage\Component\ObjectStorage;
 
-// The services storage in this example only exists during the execution. 
+// The services storage in this example only exists during the execution.
 // Use an alternative implementation of the StorageInterface to keep the compiled services.
 $serviceStorage = new ObjectStorage();
 
@@ -84,7 +84,7 @@ $serviceCompiler = new ServiceCompiler(
 ### Compiler extensions
 
 The compiler is used to reformat all defined code to operate faster in the factories later on.
-In order to add logic to the compiler, extensions need to be added. 
+In order to add logic to the compiler, extensions need to be added.
 To support services, the [ServicesCompiler](src/Component/Compiler/Extension/ServicesCompiler.php) can be used.
 Extensions are required to implement the [AbstractServiceCompilerExtension](src/Common/AbstractServiceCompilerExtension.php).
 
@@ -168,7 +168,7 @@ $serviceFactory->addExtension(
 
 ### Factory hooks
 
-Adding a factory hook is similar to factory extension. 
+Adding a factory hook is similar to factory extension.
 It must implement the [AbstractServiceFactoryHook](src/Common/Hook/AbstractServiceFactoryHook.php).
 Then to add the hook, use the following snippet:
 
@@ -219,7 +219,7 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) and [CODE_OF_CONDUCT](CODE_OF_CONDUCT
 
 ## MIT License
 
-Copyright (c) Jyxon
+Copyright (c) GrizzIT
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

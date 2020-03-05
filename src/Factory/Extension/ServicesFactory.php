@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (C) Jyxon, Inc. All rights reserved.
+ * Copyright (C) GrizzIT, Inc. All rights reserved.
  * See LICENSE for license details.
  */
 namespace Ulrack\Services\Factory\Extension;
@@ -43,7 +43,7 @@ class ServicesFactory extends AbstractServiceFactoryExtension
             $serviceKey,
             1
         );
-        
+
         if (isset($services[$internalKey])) {
             $service = $services[$internalKey];
             if (isset($service['abstract']) && $service['abstract'] === true) {
@@ -85,7 +85,7 @@ class ServicesFactory extends AbstractServiceFactoryExtension
 
             /** @var ObjectFactoryInterface $objectFactory */
             $objectFactory = $this->getInternalService('object-factory');
-            
+
             try {
                 return $this->postCreate(
                     $serviceKey,

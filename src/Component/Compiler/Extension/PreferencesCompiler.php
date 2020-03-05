@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (C) Jyxon, Inc. All rights reserved.
+ * Copyright (C) GrizzIT, Inc. All rights reserved.
  * See LICENSE for license details.
  */
 namespace Ulrack\Services\Component\Compiler\Extension;
@@ -56,7 +56,7 @@ class PreferencesCompiler extends AbstractServiceCompilerExtension
                         $scopes = ServiceCompilerHelper::getScopesFromServiceKey(
                             $serviceKey
                         );
-    
+
                         $service[$classNode] = $this->resolveClassFromPreferences(
                             $service[$classNode],
                             $services[$this->getKey()],
@@ -93,7 +93,7 @@ class PreferencesCompiler extends AbstractServiceCompilerExtension
                     $scopes = ServiceCompilerHelper::getScopesFromServiceKey(
                         $serviceKey
                     );
-                    
+
                     $aggregatedPreferences = ServiceCompilerHelper::mergeIntoArrayPath(
                         $aggregatedPreferences,
                         $scopes,
