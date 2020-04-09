@@ -5,7 +5,7 @@
  */
 namespace Ulrack\Services\Common;
 
-use Ulrack\Validator\Common\ValidatorInterface;
+use GrizzIt\Validator\Common\ValidatorInterface;
 
 abstract class AbstractServiceCompilerExtension implements ServiceCompilerExtensionInterface
 {

@@ -38,7 +38,7 @@ that can be registered out of the box.
 ```php
 <?php
 
-use Ulrack\Validator\Component\Logical\AlwaysValidator;
+use GrizzIt\Validator\Component\Logical\AlwaysValidator;
 
 $serviceRegistry->add(
     'services',
@@ -59,10 +59,10 @@ Then to create the compiler use the following snippet:
 ```php
 <?php
 
-use Ulrack\ObjectFactory\Component\Analyser\ClassAnalyser;
-use Ulrack\ObjectFactory\Factory\ObjectFactory;
+use GrizzIt\ObjectFactory\Component\Analyser\ClassAnalyser;
+use GrizzIt\ObjectFactory\Factory\ObjectFactory;
 use Ulrack\Services\Component\Compiler\ServiceCompiler;
-use Ulrack\Storage\Component\ObjectStorage;
+use GrizzIt\Storage\Component\ObjectStorage;
 
 // The services storage in this example only exists during the execution.
 // Use an alternative implementation of the StorageInterface to keep the compiled services.

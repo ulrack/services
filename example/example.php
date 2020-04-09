@@ -2,12 +2,12 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use Ulrack\Services\Factory\ServiceFactory;
-use Ulrack\Storage\Component\ObjectStorage;
-use Ulrack\ObjectFactory\Factory\ObjectFactory;
+use GrizzIt\Storage\Component\ObjectStorage;
+use GrizzIt\ObjectFactory\Factory\ObjectFactory;
 use Ulrack\JsonSchema\Factory\SchemaValidatorFactory;
 use Ulrack\Services\Component\Compiler\ServiceCompiler;
 use Ulrack\Services\Component\Registry\ServiceRegistry;
-use Ulrack\ObjectFactory\Component\Analyser\ClassAnalyser;
+use GrizzIt\ObjectFactory\Component\Analyser\ClassAnalyser;
 
 // Create the registry.
 $serviceRegistry = new ServiceRegistry();

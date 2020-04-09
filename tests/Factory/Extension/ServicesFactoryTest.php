@@ -6,16 +6,16 @@
 namespace Ulrack\Services\Tests\Factory\Extension;
 
 use PHPUnit\Framework\TestCase;
-use Ulrack\Storage\Component\ObjectStorage;
-use Ulrack\ObjectFactory\Factory\ObjectFactory;
-use Ulrack\Validator\Common\ValidatorInterface;
+use GrizzIt\Storage\Component\ObjectStorage;
+use GrizzIt\ObjectFactory\Factory\ObjectFactory;
+use GrizzIt\Validator\Common\ValidatorInterface;
 use Ulrack\Services\Tests\Mock\Hook\FactoryHook;
-use Ulrack\Validator\Component\Chain\AndValidator;
-use Ulrack\Validator\Component\Logical\NotValidator;
+use GrizzIt\Validator\Component\Chain\AndValidator;
+use GrizzIt\Validator\Component\Logical\NotValidator;
 use Ulrack\Services\Factory\Extension\ServicesFactory;
-use Ulrack\Validator\Component\Logical\AlwaysValidator;
+use GrizzIt\Validator\Component\Logical\AlwaysValidator;
 use Ulrack\Services\Exception\MissingPreferenceException;
-use Ulrack\ObjectFactory\Component\Analyser\ClassAnalyser;
+use GrizzIt\ObjectFactory\Component\Analyser\ClassAnalyser;
 use Ulrack\Services\Exception\DefinitionNotFoundException;
 use Ulrack\Services\Exception\NonInstantiableServiceException;
 use Ulrack\Services\Exception\InvalidArgumentException;

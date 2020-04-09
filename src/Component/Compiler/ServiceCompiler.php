@@ -5,12 +5,12 @@
  */
 namespace Ulrack\Services\Component\Compiler;
 
-use Ulrack\Storage\Common\StorageInterface;
-use Ulrack\Validator\Common\ValidatorInterface;
+use GrizzIt\Storage\Common\StorageInterface;
+use GrizzIt\Validator\Common\ValidatorInterface;
 use Ulrack\Services\Common\ServiceCompilerInterface;
 use Ulrack\Services\Common\ServiceRegistryInterface;
-use Ulrack\ObjectFactory\Common\ObjectFactoryInterface;
-use Ulrack\Validator\Component\Logical\AlwaysValidator;
+use GrizzIt\ObjectFactory\Common\ObjectFactoryInterface;
+use GrizzIt\Validator\Component\Logical\AlwaysValidator;
 use Ulrack\Services\Common\AbstractServiceCompilerExtension;
 use Ulrack\Services\Common\Hook\AbstractServiceCompilerHook;
 use Ulrack\Services\Common\Hook\ServiceCompilerHookInterface;

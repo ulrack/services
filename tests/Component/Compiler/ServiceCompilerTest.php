@@ -6,12 +6,12 @@
 namespace Ulrack\Services\Tests\Component\Compiler;
 
 use PHPUnit\Framework\TestCase;
-use Ulrack\Storage\Component\ObjectStorage;
-use Ulrack\ObjectFactory\Factory\ObjectFactory;
+use GrizzIt\Storage\Component\ObjectStorage;
+use GrizzIt\ObjectFactory\Factory\ObjectFactory;
 use Ulrack\Services\Tests\Mock\Hook\CompilerHook;
 use Ulrack\Services\Component\Compiler\ServiceCompiler;
 use Ulrack\Services\Component\Registry\ServiceRegistry;
-use Ulrack\ObjectFactory\Component\Analyser\ClassAnalyser;
+use GrizzIt\ObjectFactory\Component\Analyser\ClassAnalyser;
 use Ulrack\Services\Component\Compiler\Extension\ParametersCompiler;
 
 /**

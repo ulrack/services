@@ -6,13 +6,13 @@
 namespace Ulrack\Services\Factory\Extension;
 
 use Throwable;
-use Ulrack\ObjectFactory\Common\ClassAnalyserInterface;
+use GrizzIt\ObjectFactory\Common\ClassAnalyserInterface;
 use Ulrack\Services\Exception\InvalidArgumentException;
 use Ulrack\Services\Exception\MissingPreferenceException;
 use Ulrack\Services\Exception\DefinitionNotFoundException;
 use Ulrack\Services\Common\AbstractServiceFactoryExtension;
 use Ulrack\Services\Exception\NonInstantiableServiceException;
-use Ulrack\ObjectFactory\Exception\NonInstantiableClassException;
+use GrizzIt\ObjectFactory\Exception\NonInstantiableClassException;
 
 class ServicesFactory extends AbstractServiceFactoryExtension
 {

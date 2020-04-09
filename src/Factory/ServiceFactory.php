@@ -8,8 +8,8 @@ namespace Ulrack\Services\Factory;
 use Ulrack\Services\Common\ServiceFactoryInterface;
 use Ulrack\Services\Common\ServiceCompilerInterface;
 use Ulrack\Services\Common\AbstractServiceFactoryHook;
-use Ulrack\ObjectFactory\Common\ClassAnalyserInterface;
-use Ulrack\ObjectFactory\Common\ObjectFactoryInterface;
+use GrizzIt\ObjectFactory\Common\ClassAnalyserInterface;
+use GrizzIt\ObjectFactory\Common\ObjectFactoryInterface;
 use Ulrack\Services\Exception\ServiceNotFoundException;
 use Ulrack\Services\Common\AbstractServiceFactoryExtension;
 

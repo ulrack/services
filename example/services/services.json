@@ -5,7 +5,7 @@
     },
     "services": {
         "validator.always-validator-true": {
-            "class": "\\Ulrack\\Validator\\Common\\ValidatorInterface",
+            "class": "\\GrizzIt\\Validator\\Common\\ValidatorInterface",
             "parameters": {
                 "alwaysBool": "${parameters.validate}"
             }
@@ -17,7 +17,7 @@
             }
         },
         "chain-validator": {
-            "class": "\\Ulrack\\Validator\\Component\\Chain\\AndValidator",
+            "class": "\\GrizzIt\\Validator\\Component\\Chain\\AndValidator",
             "parameters": {
                 "validators": [
                     "@{validator.always-validator-true}"
@@ -25,7 +25,7 @@
             }
         },
         "not-validator": {
-            "class": "\\Ulrack\\Validator\\Component\\Logical\\NotValidator",
+            "class": "\\GrizzIt\\Validator\\Component\\Logical\\NotValidator",
             "parameters": {
                 "validator": "@{chain-validator}"
             }
@@ -33,8 +33,8 @@
     },
     "preferences": {
         "validator.default-validator": {
-            "preference": "\\Ulrack\\Validator\\Component\\Logical\\AlwaysValidator",
-            "for": "\\Ulrack\\Validator\\Common\\ValidatorInterface"
+            "preference": "\\GrizzIt\\Validator\\Component\\Logical\\AlwaysValidator",
+            "for": "\\GrizzIt\\Validator\\Common\\ValidatorInterface"
         }
     }
 }

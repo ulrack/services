@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 use Ulrack\Services\Tests\Mock\Hook\CompilerHook;
 use Ulrack\Services\Common\ServiceRegistryInterface;
 use Ulrack\Services\Component\Registry\ServiceRegistry;
-use Ulrack\Validator\Component\Logical\AlwaysValidator;
+use GrizzIt\Validator\Component\Logical\AlwaysValidator;
 use Ulrack\Services\Component\Compiler\Extension\ParametersCompiler;
 
 /**

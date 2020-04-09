@@ -6,11 +6,11 @@
 namespace Ulrack\Services\Tests\Factory\Extension;
 
 use PHPUnit\Framework\TestCase;
-use Ulrack\Storage\Component\ObjectStorage;
-use Ulrack\ObjectFactory\Factory\ObjectFactory;
+use GrizzIt\Storage\Component\ObjectStorage;
+use GrizzIt\ObjectFactory\Factory\ObjectFactory;
 use Ulrack\Services\Tests\Mock\Hook\FactoryHook;
 use Ulrack\Services\Factory\Extension\ParametersFactory;
-use Ulrack\ObjectFactory\Component\Analyser\ClassAnalyser;
+use GrizzIt\ObjectFactory\Component\Analyser\ClassAnalyser;
 use Ulrack\Services\Exception\DefinitionNotFoundException;
 
 /**
