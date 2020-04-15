@@ -4,17 +4,27 @@
     "type": "object",
     "properties": {
         "class": {
-            "$ref": "definitions.json#definitions/classDeclaration"
+            "$ref": "#definitions/classDeclaration"
         },
         "sortOrder": {
             "type": "integer",
             "minimum": 0
         },
         "key": {
-            "$ref": "definitions.json#definitions/identifierDeclaration"
+            "$ref": "#definitions/identifierDeclaration"
         },
         "parameters": {
             "type": "object"
+        }
+    },
+    "definitions": {
+        "classDeclaration": {
+            "type": "string",
+            "pattern": "^(\\\\[A-z]+)+$"
+        },
+        "identifierDeclaration": {
+            "type": "string",
+            "pattern": "^[\\w-]+$"
         }
     },
     "required": ["class", "sortOrder", "key"]

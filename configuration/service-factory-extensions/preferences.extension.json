@@ -1,5 +1,5 @@
 {
-    "$schema": "../schema/service.factory.extension.schema.json",
+    "$schema": "service.factory.extension.schema.json",
     "class": "\\Ulrack\\Services\\Factory\\Extension\\PreferencesFactory",
     "key": "preferences"
 }
