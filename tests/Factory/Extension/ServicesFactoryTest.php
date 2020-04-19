@@ -61,6 +61,33 @@ class ServicesFactoryTest extends TestCase
     }
 
     /**
+     * @return void
+     *
+     * @covers ::create
+     * @covers ::registerObject
+     */
+    public function testPreloadedObject(): void
+    {
+        $classAnalyser = new ClassAnalyser(new ObjectStorage());
+        $subject = new ServicesFactory(
+            'services',
+            [],
+            [],
+            [$this, 'getHooks'],
+            [
+                'object-factory' => new ObjectFactory($classAnalyser),
+                'class-analyser' => $classAnalyser
+            ]
+        );
+
+        $object = $this->createMock(ValidatorInterface::class);
+
+        $subject->registerObject('services.not-validator', $object);
+
+        $this->assertSame($object, $subject->create('services.not-validator'));
+    }
+
+    /**
      * @param array $services
      *
      * @return void

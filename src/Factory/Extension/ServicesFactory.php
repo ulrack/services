@@ -17,6 +17,26 @@ use GrizzIt\ObjectFactory\Exception\NonInstantiableClassException;
 class ServicesFactory extends AbstractServiceFactoryExtension
 {
     /**
+     * Contains the objects which have been created previously.
+     *
+     * @var array
+     */
+    private $objects = [];
+
+    /**
+     * Registers an object to a service key.
+     *
+     * @param string $serviceKey
+     * @param mixed $object
+     *
+     * @return void
+     */
+    public function registerObject(string $serviceKey, $object): void
+    {
+        $this->objects[$serviceKey] = $object;
+    }
+
+    /**
      * Retrieve the parameter from the services.
      *
      * @param string $serviceKey
@@ -34,6 +54,14 @@ class ServicesFactory extends AbstractServiceFactoryExtension
             $serviceKey,
             $this->getParameters()
         )['serviceKey'];
+
+        if (isset($this->objects[$serviceKey])) {
+            return $this->postCreate(
+                $serviceKey,
+                $this->objects[$serviceKey],
+                $this->getParameters()
+            )['return'];
+        }
 
         $services = $this->getServices()[$this->getKey()];
 
@@ -87,9 +115,14 @@ class ServicesFactory extends AbstractServiceFactoryExtension
             $objectFactory = $this->getInternalService('object-factory');
 
             try {
+                $this->objects[$serviceKey] = $objectFactory->create(
+                    $service['class'],
+                    $parameters
+                );
+
                 return $this->postCreate(
                     $serviceKey,
-                    $objectFactory->create($service['class'], $parameters),
+                    $this->objects[$serviceKey],
                     $this->getParameters()
                 )['return'];
             } catch (Throwable $exception) {

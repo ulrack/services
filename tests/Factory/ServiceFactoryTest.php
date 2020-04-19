@@ -14,6 +14,7 @@ use Ulrack\Services\Common\ServiceCompilerInterface;
 use Ulrack\Services\Exception\ServiceNotFoundException;
 use Ulrack\Services\Factory\Extension\ParametersFactory;
 use GrizzIt\ObjectFactory\Component\Analyser\ClassAnalyser;
+use Ulrack\Services\Common\ServiceFactoryExtensionInterface;
 
 /**
  * @coversDefaultClass Ulrack\Services\Factory\ServiceFactory
@@ -29,6 +30,7 @@ class ServiceFactoryTest extends TestCase
      * @covers ::addExtension
      * @covers ::addHook
      * @covers ::getHooks
+     * @covers ::getExtension
      */
     public function testCreate(): void
     {
@@ -50,6 +52,11 @@ class ServiceFactoryTest extends TestCase
         $subject->addHook('parameters', FactoryHook::class, 0, []);
 
         $this->assertEquals('foo', $subject->create('parameters.my-parameter'));
+
+        $this->assertInstanceOf(
+            ServiceFactoryExtensionInterface::class,
+            $subject->getExtension('parameters')
+        );
 
         $this->expectException(ServiceNotFoundException::class);
         $subject->create('not-parameters.my-parameter');

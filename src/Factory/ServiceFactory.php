@@ -8,10 +8,12 @@ namespace Ulrack\Services\Factory;
 use Ulrack\Services\Common\ServiceFactoryInterface;
 use Ulrack\Services\Common\ServiceCompilerInterface;
 use Ulrack\Services\Common\AbstractServiceFactoryHook;
+use Ulrack\Services\Exception\ServiceNotFoundException;
 use GrizzIt\ObjectFactory\Common\ClassAnalyserInterface;
 use GrizzIt\ObjectFactory\Common\ObjectFactoryInterface;
-use Ulrack\Services\Exception\ServiceNotFoundException;
 use Ulrack\Services\Common\AbstractServiceFactoryExtension;
+use Ulrack\Services\Common\Hook\ServiceFactoryHookInterface;
+use Ulrack\Services\Common\ServiceFactoryExtensionInterface;
 
 class ServiceFactory implements ServiceFactoryInterface
 {
@@ -145,7 +147,7 @@ class ServiceFactory implements ServiceFactoryInterface
      *
      * @param string $key
      *
-     * @return ServiceCompilerHookInterface[]
+     * @return ServiceFactoryHookInterface[]
      */
     public function getHooks(string $key): array
     {
@@ -158,6 +160,18 @@ class ServiceFactory implements ServiceFactoryInterface
         }
 
         return $hooks;
+    }
+
+    /**
+     * Retrieve the extension for a key.
+     *
+     * @param string $key
+     *
+     * @return ServiceFactoryExtensionInterface
+     */
+    public function getExtension(string $key): ServiceFactoryExtensionInterface
+    {
+        return $this->extensions[$key];
     }
 
     /**
