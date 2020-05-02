@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright (C) GrizzIT, Inc. All rights reserved.
  * See LICENSE for license details.
  */
+
 namespace Ulrack\Services\Tests\Helper;
 
 use PHPUnit\Framework\TestCase;

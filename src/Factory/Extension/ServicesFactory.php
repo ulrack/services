@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright (C) GrizzIT, Inc. All rights reserved.
  * See LICENSE for license details.
  */
+
 namespace Ulrack\Services\Factory\Extension;
 
 use Throwable;
@@ -55,22 +57,22 @@ class ServicesFactory extends AbstractServiceFactoryExtension
             $this->getParameters()
         )['serviceKey'];
 
-        if (isset($this->objects[$serviceKey])) {
-            return $this->postCreate(
-                $serviceKey,
-                $this->objects[$serviceKey],
-                $this->getParameters()
-            )['return'];
-        }
-
-        $services = $this->getServices()[$this->getKey()];
-
         $internalKey = preg_replace(
             sprintf('/^%s\\./', preg_quote($this->getKey())),
             '',
             $serviceKey,
             1
         );
+
+        if (isset($this->objects[$internalKey])) {
+            return $this->postCreate(
+                $serviceKey,
+                $this->objects[$internalKey],
+                $this->getParameters()
+            )['return'];
+        }
+
+        $services = $this->getServices()[$this->getKey()];
 
         if (isset($services[$internalKey])) {
             $service = $services[$internalKey];
@@ -146,10 +148,12 @@ class ServicesFactory extends AbstractServiceFactoryExtension
      */
     private function resolveReference($value)
     {
-        if (is_string($value) && preg_match(
-            '/^\\@\\{/',
-            $value
-        ) === 1) {
+        if (
+            is_string($value) && preg_match(
+                '/^\\@\\{/',
+                $value
+            ) === 1
+        ) {
             $value = $this->create(trim($value, '@{}'));
         }
 

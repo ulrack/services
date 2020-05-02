@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright (C) GrizzIT, Inc. All rights reserved.
  * See LICENSE for license details.
  */
+
 namespace Ulrack\Services\Component\Compiler;
 
 use GrizzIt\Storage\Common\StorageInterface;
@@ -23,14 +25,14 @@ class ServiceCompiler implements ServiceCompilerInterface
      *
      * @var string
      */
-    const STORAGE_COMPILED_KEY = 'compiled';
+    public const STORAGE_COMPILED_KEY = 'compiled';
 
     /**
      * The key that is used in the storage to store all compiled services.
      *
      * @var string
      */
-    const STORAGE_SERVICES_KEY = 'services';
+    public const STORAGE_SERVICES_KEY = 'services';
 
     /**
      * Contains the service registry.
@@ -174,9 +176,11 @@ class ServiceCompiler implements ServiceCompilerInterface
     public function compile(): array
     {
         if ($this->serviceStorage->has(static::STORAGE_COMPILED_KEY)) {
-            if ($this->serviceStorage->get(
-                static::STORAGE_COMPILED_KEY
-            ) === true) {
+            if (
+                $this->serviceStorage->get(
+                    static::STORAGE_COMPILED_KEY
+                ) === true
+            ) {
                 return $this->serviceStorage->get(
                     static::STORAGE_SERVICES_KEY
                 );

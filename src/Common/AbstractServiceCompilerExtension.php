@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright (C) GrizzIT, Inc. All rights reserved.
  * See LICENSE for license details.
  */
+
 namespace Ulrack\Services\Common;
 
 use GrizzIt\Validator\Common\ValidatorInterface;
@@ -76,11 +78,13 @@ abstract class AbstractServiceCompilerExtension implements ServiceCompilerExtens
     {
         $registry = $this->registry->get($this->key);
         foreach ($registry as $key => $entry) {
-            if (!$this->validator->__invoke(
-                json_decode(
-                    json_encode($entry)
+            if (
+                !$this->validator->__invoke(
+                    json_decode(
+                        json_encode($entry)
+                    )
                 )
-            )) {
+            ) {
                 unset($registry[$key]);
             }
         }

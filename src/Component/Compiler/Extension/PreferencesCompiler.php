@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright (C) GrizzIT, Inc. All rights reserved.
  * See LICENSE for license details.
  */
+
 namespace Ulrack\Services\Component\Compiler\Extension;
 
 use Ulrack\Services\Helper\ServiceCompilerHelper;
@@ -10,7 +12,7 @@ use Ulrack\Services\Common\AbstractServiceCompilerExtension;
 
 class PreferencesCompiler extends AbstractServiceCompilerExtension
 {
-    const SERVICES_PARAMETER_KEY = 'service_keys';
+    public const SERVICES_PARAMETER_KEY = 'service_keys';
 
     /**
      * Retrieve the service definitions.
@@ -46,13 +48,17 @@ class PreferencesCompiler extends AbstractServiceCompilerExtension
 
         $inputServices = $services;
 
-        foreach ($this->getParameter(
-            self::SERVICES_PARAMETER_KEY
-        ) as $serviceName => $classNode) {
+        foreach (
+            $this->getParameter(
+                self::SERVICES_PARAMETER_KEY
+            ) as $serviceName => $classNode
+        ) {
             foreach ($services[$serviceName] as $serviceKey => &$service) {
                 if (isset($service[$classNode])) {
-                    if (class_exists($service[$classNode])
-                    || interface_exists($service[$classNode])) {
+                    if (
+                        class_exists($service[$classNode])
+                        || interface_exists($service[$classNode])
+                    ) {
                         $scopes = ServiceCompilerHelper::getScopesFromServiceKey(
                             $serviceKey
                         );
@@ -86,10 +92,14 @@ class PreferencesCompiler extends AbstractServiceCompilerExtension
     {
         $aggregatedPreferences = [];
         foreach ($preferences as $serviceKey => $preference) {
-            if (class_exists($preference['preference'])
-            || interface_exists($preference['preference'])) {
-                if (class_exists($preference['for'])
-                || interface_exists($preference['for'])) {
+            if (
+                class_exists($preference['preference'])
+                || interface_exists($preference['preference'])
+            ) {
+                if (
+                    class_exists($preference['for'])
+                    || interface_exists($preference['for'])
+                ) {
                     $scopes = ServiceCompilerHelper::getScopesFromServiceKey(
                         $serviceKey
                     );

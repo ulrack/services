@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright (C) GrizzIT, Inc. All rights reserved.
  * See LICENSE for license details.
  */
+
 namespace Ulrack\Services\Tests\Factory\Extension;
 
 use PHPUnit\Framework\TestCase;
@@ -82,7 +84,7 @@ class ServicesFactoryTest extends TestCase
 
         $object = $this->createMock(ValidatorInterface::class);
 
-        $subject->registerObject('services.not-validator', $object);
+        $subject->registerObject('not-validator', $object);
 
         $this->assertSame($object, $subject->create('services.not-validator'));
     }
@@ -211,40 +213,40 @@ class ServicesFactoryTest extends TestCase
             [
                 [
                     'services' => [
-                        'validator.always-validator-true'=> [
-                            'class'=> AlwaysValidator::class,
+                        'validator.always-validator-true' => [
+                            'class' => AlwaysValidator::class,
                             'abstract' => true,
-                            'parameters'=> [
-                                'alwaysBool'=> true
+                            'parameters' => [
+                                'alwaysBool' => true
                             ]
                         ],
-                        'validator.always-validator-false'=> [
-                            'class'=> AlwaysValidator::class,
-                            'parameters'=> [
-                                'alwaysBool'=> false
+                        'validator.always-validator-false' => [
+                            'class' => AlwaysValidator::class,
+                            'parameters' => [
+                                'alwaysBool' => false
                             ]
                         ],
-                        'validator.invalid'=> [
-                            'class'=> AlwaysValidator::class,
-                            'parameters'=> [
-                                'alwaysValidate'=> false
+                        'validator.invalid' => [
+                            'class' => AlwaysValidator::class,
+                            'parameters' => [
+                                'alwaysValidate' => false
                             ]
                         ],
-                        'validator.unresolved'=> [
-                            'class'=> ValidatorInterface::class
+                        'validator.unresolved' => [
+                            'class' => ValidatorInterface::class
                         ],
-                        'chain-validator'=> [
-                            'class'=> AndValidator::class,
-                            'parameters'=> [
-                                'validators'=> [
+                        'chain-validator' => [
+                            'class' => AndValidator::class,
+                            'parameters' => [
+                                'validators' => [
                                     '@{validator.always-validator-false}'
                                 ]
                             ]
                         ],
-                        'not-validator'=> [
-                            'class'=> NotValidator::class,
-                            'parameters'=> [
-                                'validator'=> '@{chain-validator}'
+                        'not-validator' => [
+                            'class' => NotValidator::class,
+                            'parameters' => [
+                                'validator' => '@{chain-validator}'
                             ]
                         ]
                     ]
