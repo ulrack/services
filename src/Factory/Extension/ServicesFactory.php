@@ -117,14 +117,14 @@ class ServicesFactory extends AbstractServiceFactoryExtension
             $objectFactory = $this->getInternalService('object-factory');
 
             try {
-                $this->objects[$serviceKey] = $objectFactory->create(
+                $this->objects[$internalKey] = $objectFactory->create(
                     $service['class'],
                     $parameters
                 );
 
                 return $this->postCreate(
                     $serviceKey,
-                    $this->objects[$serviceKey],
+                    $this->objects[$internalKey],
                     $this->getParameters()
                 )['return'];
             } catch (Throwable $exception) {
