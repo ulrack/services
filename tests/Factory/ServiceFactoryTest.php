@@ -40,7 +40,7 @@ class ServiceFactoryTest extends TestCase
         $serviceCompiler->expects(static::once())
             ->method('compile')
             ->willReturn(
-                ['parameters' => ['${parameters.my-parameter}' => 'foo']]
+                ['parameters' => ['@{parameters.my-parameter}' => 'foo']]
             );
 
         $classAnalyser = new ClassAnalyser(new ObjectStorage());

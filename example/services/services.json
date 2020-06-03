@@ -7,27 +7,27 @@
         "validator.always-validator-true": {
             "class": "\\GrizzIt\\Validator\\Common\\ValidatorInterface",
             "parameters": {
-                "alwaysBool": "${parameters.validate}"
+                "alwaysBool": "@{parameters.validate}"
             }
         },
         "validator.always-validator-false": {
             "parent": "validator.always-validator-true",
             "parameters": {
-                "alwaysBool": "${parameters.do-not-validate}"
+                "alwaysBool": "@{parameters.do-not-validate}"
             }
         },
         "chain-validator": {
             "class": "\\GrizzIt\\Validator\\Component\\Chain\\AndValidator",
             "parameters": {
                 "validators": [
-                    "@{validator.always-validator-true}"
+                    "@{services.validator.always-validator-true}"
                 ]
             }
         },
         "not-validator": {
             "class": "\\GrizzIt\\Validator\\Component\\Logical\\NotValidator",
             "parameters": {
-                "validator": "@{chain-validator}"
+                "validator": "@{services.chain-validator}"
             }
         }
     },

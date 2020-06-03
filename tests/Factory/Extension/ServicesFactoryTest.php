@@ -13,17 +13,19 @@ use GrizzIt\ObjectFactory\Factory\ObjectFactory;
 use GrizzIt\Validator\Common\ValidatorInterface;
 use Ulrack\Services\Tests\Mock\Hook\FactoryHook;
 use GrizzIt\Validator\Component\Chain\AndValidator;
+use Ulrack\Services\Common\ServiceFactoryInterface;
 use GrizzIt\Validator\Component\Logical\NotValidator;
 use Ulrack\Services\Factory\Extension\ServicesFactory;
+use Ulrack\Services\Exception\InvalidArgumentException;
 use GrizzIt\Validator\Component\Logical\AlwaysValidator;
 use Ulrack\Services\Exception\MissingPreferenceException;
-use GrizzIt\ObjectFactory\Component\Analyser\ClassAnalyser;
 use Ulrack\Services\Exception\DefinitionNotFoundException;
+use GrizzIt\ObjectFactory\Component\Analyser\ClassAnalyser;
 use Ulrack\Services\Exception\NonInstantiableServiceException;
-use Ulrack\Services\Exception\InvalidArgumentException;
 
 /**
  * @coversDefaultClass Ulrack\Services\Factory\Extension\ServicesFactory
+ * @covers Ulrack\Services\Common\AbstractServiceFactoryExtension
  * @covers Ulrack\Services\Exception\NonInstantiableServiceException
  * @covers Ulrack\Services\Exception\MissingPreferenceException
  * @covers Ulrack\Services\Exception\InvalidArgumentException
@@ -66,12 +68,13 @@ class ServicesFactoryTest extends TestCase
      * @return void
      *
      * @covers ::create
-     * @covers ::registerObject
+     * @covers ::registerService
      */
-    public function testPreloadedObject(): void
+    public function testPreloadedService(): void
     {
         $classAnalyser = new ClassAnalyser(new ObjectStorage());
         $subject = new ServicesFactory(
+            $this->createMock(ServiceFactoryInterface::class),
             'services',
             [],
             [],
@@ -84,7 +87,7 @@ class ServicesFactoryTest extends TestCase
 
         $object = $this->createMock(ValidatorInterface::class);
 
-        $subject->registerObject('not-validator', $object);
+        $subject->registerService('not-validator', $object);
 
         $this->assertSame($object, $subject->create('services.not-validator'));
     }
@@ -102,7 +105,13 @@ class ServicesFactoryTest extends TestCase
     public function testCreate(array $services): void
     {
         $classAnalyser = new ClassAnalyser(new ObjectStorage());
+        $serviceFactory = $this->createMock(ServiceFactoryInterface::class);
+        $serviceFactory->expects(static::any())
+            ->method('create')
+            ->willReturn($this->createMock(ValidatorInterface::class));
+
         $subject = new ServicesFactory(
+            $serviceFactory,
             'services',
             [],
             $services,
@@ -113,7 +122,7 @@ class ServicesFactoryTest extends TestCase
             ]
         );
 
-        $this->assertInstanceOf(NotValidator::class, $subject->create('services.not-validator'));
+        $this->assertInstanceOf(AndValidator::class, $subject->create('services.chain-validator'));
 
         $this->expectException(DefinitionNotFoundException::class);
 
@@ -133,6 +142,7 @@ class ServicesFactoryTest extends TestCase
     {
         $classAnalyser = new ClassAnalyser(new ObjectStorage());
         $subject = new ServicesFactory(
+            $this->createMock(ServiceFactoryInterface::class),
             'services',
             [],
             $services,
@@ -161,6 +171,7 @@ class ServicesFactoryTest extends TestCase
     {
         $classAnalyser = new ClassAnalyser(new ObjectStorage());
         $subject = new ServicesFactory(
+            $this->createMock(ServiceFactoryInterface::class),
             'services',
             [],
             $services,
@@ -189,6 +200,7 @@ class ServicesFactoryTest extends TestCase
     {
         $classAnalyser = new ClassAnalyser(new ObjectStorage());
         $subject = new ServicesFactory(
+            $this->createMock(ServiceFactoryInterface::class),
             'services',
             [],
             $services,
@@ -239,14 +251,14 @@ class ServicesFactoryTest extends TestCase
                             'class' => AndValidator::class,
                             'parameters' => [
                                 'validators' => [
-                                    '@{validator.always-validator-false}'
+                                    '@{services.validator.always-validator-false}'
                                 ]
                             ]
                         ],
                         'not-validator' => [
                             'class' => NotValidator::class,
                             'parameters' => [
-                                'validator' => '@{chain-validator}'
+                                'validator' => '@{services.chain-validator}'
                             ]
                         ]
                     ]

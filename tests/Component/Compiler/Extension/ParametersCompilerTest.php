@@ -75,7 +75,7 @@ class ParametersCompilerTest extends TestCase
             [$this, 'getHooks']
         );
 
-        $this->assertEquals(['${parameters.my-parameter}' => 'foo'], $subject->fetch());
+        $this->assertEquals(['@{parameters.my-parameter}' => 'foo'], $subject->fetch());
     }
 
     /**
@@ -98,16 +98,16 @@ class ParametersCompilerTest extends TestCase
 
         $result = $subject->compile(
             [
-                'parameters' => ['${parameters.my-parameter}' => 'foo'],
+                'parameters' => ['@{parameters.my-parameter}' => 'foo'],
                 'not-parameters' => [
-                    ['foo' => '${parameters.my-parameter}']
+                    ['foo' => '@{parameters.my-parameter}']
                 ]
             ]
         );
 
         $this->assertEquals(
             [
-                'parameters' => ['${parameters.my-parameter}' => 'foo'],
+                'parameters' => ['@{parameters.my-parameter}' => 'foo'],
                 'not-parameters' => [
                     ['foo' => 'foo']
                 ]

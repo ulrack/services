@@ -13,6 +13,26 @@ use Ulrack\Services\Common\AbstractServiceFactoryExtension;
 class PreferencesFactory extends AbstractServiceFactoryExtension
 {
     /**
+     * Contains the registered services.
+     *
+     * @var array
+     */
+    private $registeredServices = [];
+
+    /**
+     * Register a value to a service key.
+     *
+     * @param string $serviceKey
+     * @param mixed $value
+     *
+     * @return void
+     */
+    public function registerService(string $serviceKey, $value): void
+    {
+        $this->registeredServices[$serviceKey] = $value;
+    }
+
+    /**
      * Retrieve the parameter from the services.
      *
      * @param string $serviceKey
@@ -28,13 +48,22 @@ class PreferencesFactory extends AbstractServiceFactoryExtension
             $this->getParameters()
         )['serviceKey'];
 
-        $preferences = $this->getServices()[$this->getKey()]['definitions'];
         $internalKey = preg_replace(
             sprintf('/^%s\\./', preg_quote($this->getKey())),
             '',
             $serviceKey,
             1
         );
+
+        if (isset($this->registeredServices[$internalKey])) {
+            return $this->postCreate(
+                $serviceKey,
+                $this->registeredServices[$internalKey],
+                $this->getParameters()
+            )['return'];
+        }
+
+        $preferences = $this->getServices()[$this->getKey()]['definitions'];
 
         if (isset($preferences[$internalKey])) {
             return $this->postCreate(

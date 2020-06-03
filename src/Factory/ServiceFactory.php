@@ -98,6 +98,7 @@ class ServiceFactory implements ServiceFactoryInterface
                 ->create(
                     $class,
                     [
+                        'serviceFactory' => $this,
                         'key' => $key,
                         'parameters' => $parameters,
                         'services' => $this->services,

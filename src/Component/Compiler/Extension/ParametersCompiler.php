@@ -69,7 +69,7 @@ class ParametersCompiler extends AbstractServiceCompilerExtension
     {
         $prepared = [];
         foreach ($parameters as $key => $value) {
-            $prepared[sprintf('${parameters.%s}', $key)] = $value;
+            $prepared[sprintf('@{parameters.%s}', $key)] = $value;
         }
 
         return $prepared;

@@ -11,9 +11,10 @@ use PHPUnit\Framework\TestCase;
 use GrizzIt\Storage\Component\ObjectStorage;
 use GrizzIt\ObjectFactory\Factory\ObjectFactory;
 use Ulrack\Services\Tests\Mock\Hook\FactoryHook;
+use Ulrack\Services\Common\ServiceFactoryInterface;
 use Ulrack\Services\Factory\Extension\ParametersFactory;
-use GrizzIt\ObjectFactory\Component\Analyser\ClassAnalyser;
 use Ulrack\Services\Exception\DefinitionNotFoundException;
+use GrizzIt\ObjectFactory\Component\Analyser\ClassAnalyser;
 
 /**
  * @coversDefaultClass Ulrack\Services\Factory\Extension\ParametersFactory
@@ -33,7 +34,7 @@ class ParametersFactoryTest extends TestCase
         $classAnalyser = new ClassAnalyser(new ObjectStorage());
         $services = [
             'parameters' => [
-                '${parameters.my-parameter}' => 'foo'
+                '@{parameters.my-parameter}' => 'foo'
             ]
         ];
 
@@ -60,16 +61,47 @@ class ParametersFactoryTest extends TestCase
      * @return void
      *
      * @covers ::create
+     * @covers ::registerService
+     */
+    public function testPreloadedService(): void
+    {
+        $classAnalyser = new ClassAnalyser(new ObjectStorage());
+        $subject = new ParametersFactory(
+            $this->createMock(ServiceFactoryInterface::class),
+            'parameters',
+            ['foo' => 'bar'],
+            [
+                'parameters' => [
+                    '@{parameters.my-parameter}' => 'foo'
+                ]
+            ],
+            [$this, 'getHooks'],
+            [
+                'object-factory' => new ObjectFactory($classAnalyser),
+                'class-analyser' => $classAnalyser
+            ]
+        );
+
+        $subject->registerService('bar', 'baz');
+
+        $this->assertSame('baz', $subject->create('parameters.bar'));
+    }
+
+    /**
+     * @return void
+     *
+     * @covers ::create
      */
     public function testCreate(): void
     {
         $classAnalyser = new ClassAnalyser(new ObjectStorage());
         $subject = new ParametersFactory(
+            $this->createMock(ServiceFactoryInterface::class),
             'parameters',
             ['foo' => 'bar'],
             [
                 'parameters' => [
-                    '${parameters.my-parameter}' => 'foo'
+                    '@{parameters.my-parameter}' => 'foo'
                 ]
             ],
             [$this, 'getHooks'],

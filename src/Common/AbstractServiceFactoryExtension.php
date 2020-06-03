@@ -7,6 +7,8 @@
 
 namespace Ulrack\Services\Common;
 
+use Ulrack\Services\Common\ServiceFactoryInterface;
+
 abstract class AbstractServiceFactoryExtension implements ServiceFactoryExtensionInterface
 {
     /**
@@ -38,8 +40,16 @@ abstract class AbstractServiceFactoryExtension implements ServiceFactoryExtensio
     private $getHooks;
 
     /**
+     * Contains the main service factory.
+     *
+     * @var ServiceFactoryInterface
+     */
+    private $serviceFactory;
+
+    /**
      * Constructor
      *
+     * @param ServiceFactoryInterface $serviceFactory
      * @param string $key
      * @param array $parameters
      * @param array $services
@@ -47,12 +57,14 @@ abstract class AbstractServiceFactoryExtension implements ServiceFactoryExtensio
      * @param array $internalServices
      */
     public function __construct(
+        ServiceFactoryInterface $serviceFactory,
         string $key,
         array $parameters,
         array $services,
         callable $getHooks,
         array $internalServices = []
     ) {
+        $this->serviceFactory   = $serviceFactory;
         $this->key              = $key;
         $this->parameters       = $parameters;
         $this->services         = $services;
@@ -174,5 +186,29 @@ abstract class AbstractServiceFactoryExtension implements ServiceFactoryExtensio
     public function getParameters(): array
     {
         return $this->parameters;
+    }
+
+    /**
+     * Determines whether a string is a reference to another registration.
+     *
+     * @param string $input
+     *
+     * @return bool
+     */
+    public function isReference(string $input): bool
+    {
+        return preg_match('/^@{.+}$/', $input) === 1;
+    }
+
+    /**
+     * Calls the main service factory to retrieve a value.
+     *
+     * @param string $service
+     *
+     * @return mixed
+     */
+    public function superCreate(string $service)
+    {
+        return $this->serviceFactory->create($service);
     }
 }

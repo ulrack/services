@@ -26,16 +26,16 @@ class ServicesFactory extends AbstractServiceFactoryExtension
     private $objects = [];
 
     /**
-     * Registers an object to a service key.
+     * Register a value to a service key.
      *
      * @param string $serviceKey
-     * @param mixed $object
+     * @param mixed $value
      *
      * @return void
      */
-    public function registerObject(string $serviceKey, $object): void
+    public function registerService(string $serviceKey, $value): void
     {
-        $this->objects[$serviceKey] = $object;
+        $this->objects[$serviceKey] = $value;
     }
 
     /**
@@ -102,12 +102,6 @@ class ServicesFactory extends AbstractServiceFactoryExtension
                     $parameterValue = $this->resolveReference(
                         $service['parameters'][$parameterName]
                     );
-
-                    if (is_array($parameterValue)) {
-                        foreach ($parameterValue as &$value) {
-                            $value = $this->resolveReference($value);
-                        }
-                    }
                 }
 
                 $parameters[$parameterName] = $parameterValue;
@@ -148,13 +142,14 @@ class ServicesFactory extends AbstractServiceFactoryExtension
      */
     private function resolveReference($value)
     {
-        if (
-            is_string($value) && preg_match(
-                '/^\\@\\{/',
-                $value
-            ) === 1
-        ) {
-            $value = $this->create(trim($value, '@{}'));
+        if (is_string($value) && $this->isReference($value)) {
+            $value = $this->superCreate(trim($value, '@{}'));
+        }
+
+        if (is_array($value)) {
+            foreach ($value as $key => $item) {
+                $value[$key] = $this->resolveReference($item);
+            }
         }
 
         return $value;
