@@ -13,6 +13,7 @@ use Ulrack\Services\Common\AbstractServiceFactoryHook;
 use Ulrack\Services\Exception\ServiceNotFoundException;
 use GrizzIt\ObjectFactory\Common\ClassAnalyserInterface;
 use GrizzIt\ObjectFactory\Common\ObjectFactoryInterface;
+use GrizzIt\ObjectFactory\Common\MethodReflectorInterface;
 use Ulrack\Services\Common\AbstractServiceFactoryExtension;
 use Ulrack\Services\Common\Hook\ServiceFactoryHookInterface;
 use Ulrack\Services\Common\ServiceFactoryExtensionInterface;
@@ -48,6 +49,13 @@ class ServiceFactory implements ServiceFactoryInterface
     private $classAnalyser;
 
     /**
+     * Contains the method reflector.
+     *
+     * @var MethodReflectorInterface
+     */
+    private $methodReflector;
+
+    /**
      * Contains the compiled services.
      *
      * @var array
@@ -67,15 +75,18 @@ class ServiceFactory implements ServiceFactoryInterface
      * @param ServiceCompilerInterface $serviceCompiler
      * @param ObjectFactoryInterface   $objectFactory
      * @param ClassAnalyserInterface   $classAnalyser
+     * @param MethodReflectorInterface $methodReflector
      */
     public function __construct(
         ServiceCompilerInterface $serviceCompiler,
         ObjectFactoryInterface $objectFactory,
-        ClassAnalyserInterface $classAnalyser
+        ClassAnalyserInterface $classAnalyser,
+        MethodReflectorInterface $methodReflector
     ) {
         $this->serviceCompiler = $serviceCompiler;
         $this->objectFactory = $objectFactory;
         $this->classAnalyser = $classAnalyser;
+        $this->methodReflector = $methodReflector;
         $this->services = $this->serviceCompiler->compile();
     }
 
@@ -104,7 +115,8 @@ class ServiceFactory implements ServiceFactoryInterface
                         'services' => $this->services,
                         'internalServices' => [
                             'object-factory' => $this->objectFactory,
-                            'class-analyser' => $this->classAnalyser
+                            'class-analyser' => $this->classAnalyser,
+                            'method-reflector' => $this->methodReflector
                         ],
                         'getHooks' => [$this, 'getHooks']
                     ]
@@ -138,7 +150,8 @@ class ServiceFactory implements ServiceFactoryInterface
                         'services' => $this->services,
                         'internalServices' => [
                             'object-factory' => $this->objectFactory,
-                            'class-analyser' => $this->classAnalyser
+                            'class-analyser' => $this->classAnalyser,
+                            'method-reflector' => $this->methodReflector
                         ]
                     ]
                 );

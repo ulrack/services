@@ -15,6 +15,7 @@ use Ulrack\Services\Tests\Mock\Hook\FactoryHook;
 use Ulrack\Services\Common\ServiceCompilerInterface;
 use Ulrack\Services\Exception\ServiceNotFoundException;
 use Ulrack\Services\Factory\Extension\ParametersFactory;
+use GrizzIt\ObjectFactory\Common\MethodReflectorInterface;
 use GrizzIt\ObjectFactory\Component\Analyser\ClassAnalyser;
 use Ulrack\Services\Common\ServiceFactoryExtensionInterface;
 
@@ -47,7 +48,8 @@ class ServiceFactoryTest extends TestCase
         $subject = new ServiceFactory(
             $serviceCompiler,
             new ObjectFactory($classAnalyser),
-            $classAnalyser
+            $classAnalyser,
+            $this->createMock(MethodReflectorInterface::class)
         );
 
         $subject->addExtension('parameters', ParametersFactory::class, []);

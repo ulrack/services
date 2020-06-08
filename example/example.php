@@ -9,6 +9,7 @@ use Ulrack\JsonSchema\Factory\SchemaValidatorFactory;
 use Ulrack\Services\Component\Compiler\ServiceCompiler;
 use Ulrack\Services\Component\Registry\ServiceRegistry;
 use GrizzIt\ObjectFactory\Component\Analyser\ClassAnalyser;
+use GrizzIt\ObjectFactory\Component\Reflector\MethodReflector;
 
 // Create the registry.
 $serviceRegistry = new ServiceRegistry();
@@ -16,9 +17,18 @@ $serviceRegistry = new ServiceRegistry();
 // Create the storage for the compiled services.
 $serviceStorage = new ObjectStorage();
 
+// Create a storage for the reflection results.
+$analysisStorage = new ObjectStorage();
+
+// Create the method reflector.
+$methodReflector = new MethodReflector(
+    $analysisStorage
+);
+
 // Create the class analyser so we know which parameters are expected.
 $classAnalyser = new ClassAnalyser(
-    new ObjectStorage()
+    $analysisStorage,
+    $methodReflector
 );
 
 // Create an instance of the ObjectFactory so new objects can be constructed.
@@ -89,7 +99,12 @@ foreach ($services as $extensionKey => $definition) {
 }
 
 // Create the service factory.
-$serviceFactory = new ServiceFactory($serviceCompiler, $objectFactory, $classAnalyser);
+$serviceFactory = new ServiceFactory(
+    $serviceCompiler,
+    $objectFactory,
+    $classAnalyser,
+    $methodReflector
+);
 
 $extensions = [];
 $extensionDir = array_diff(

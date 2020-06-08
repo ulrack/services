@@ -63,13 +63,19 @@ use GrizzIt\ObjectFactory\Component\Analyser\ClassAnalyser;
 use GrizzIt\ObjectFactory\Factory\ObjectFactory;
 use Ulrack\Services\Component\Compiler\ServiceCompiler;
 use GrizzIt\Storage\Component\ObjectStorage;
+use GrizzIt\ObjectFactory\Component\Reflector\MethodReflector;
 
 // The services storage in this example only exists during the execution.
 // Use an alternative implementation of the StorageInterface to keep the compiled services.
 $serviceStorage = new ObjectStorage();
 
+$analysisStorage = new ObjectStorage();
+
+$methodReflector = new MethodReflector();
+
 $classAnalyser = new ClassAnalyser(
-    new ObjectStorage()
+    $analysisStorage,
+    $methodReflector
 );
 
 $objectFactory = new ObjectFactory($classAnalyser);
@@ -142,7 +148,8 @@ $serviceFactory = new ServiceFactory(
     // The previously configured service compiler.
     $serviceCompiler,
     $objectFactory,
-    $classAnalyser
+    $classAnalyser,
+    $methodReflector
 );
 
 ```
