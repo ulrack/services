@@ -8,6 +8,7 @@
 namespace Ulrack\Services\Exception;
 
 use Exception;
+use Throwable;
 use InvalidArgumentException as PhpInvalidArgumentException;
 
 class InvalidArgumentException extends PhpInvalidArgumentException
@@ -17,12 +18,12 @@ class InvalidArgumentException extends PhpInvalidArgumentException
      *
      * @param array $parameters
      * @param string $class
-     * @param Exception $previous
+     * @param Throwable $previous
      */
     public function __construct(
         array $parameters,
         string $class,
-        Exception $previous = null
+        Throwable $previous = null
     ) {
         parent::__construct(
             sprintf(

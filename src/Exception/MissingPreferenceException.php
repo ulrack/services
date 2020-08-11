@@ -7,7 +7,7 @@
 
 namespace Ulrack\Services\Exception;
 
-use Exception;
+use Throwable;
 use RuntimeException;
 
 class MissingPreferenceException extends RuntimeException
@@ -16,11 +16,11 @@ class MissingPreferenceException extends RuntimeException
      * Constructor.
      *
      * @param string $class
-     * @param Exception $previous
+     * @param Throwable $previous
      */
     public function __construct(
         string $class,
-        Exception $previous = null
+        Throwable $previous = null
     ) {
         parent::__construct(
             sprintf('Missing preference for %s', $class),

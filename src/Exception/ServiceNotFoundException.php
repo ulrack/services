@@ -8,6 +8,7 @@
 namespace Ulrack\Services\Exception;
 
 use Exception;
+use Throwable;
 
 class ServiceNotFoundException extends Exception
 {
@@ -15,11 +16,11 @@ class ServiceNotFoundException extends Exception
      * Constructor.
      *
      * @param string $serviceKey
-     * @param Exception $previous
+     * @param Throwable $previous
      */
     public function __construct(
         string $serviceKey,
-        Exception $previous = null
+        Throwable $previous = null
     ) {
         parent::__construct(
             sprintf(

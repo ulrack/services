@@ -7,6 +7,7 @@
 
 namespace Ulrack\Services\Exception;
 
+use Throwable;
 use RuntimeException;
 
 class DefinitionNotFoundException extends RuntimeException
@@ -15,11 +16,11 @@ class DefinitionNotFoundException extends RuntimeException
      * Constructor.
      *
      * @param string $key
-     * @param Exception $previous
+     * @param Throwable $previous
      */
     public function __construct(
         string $key,
-        Exception $previous = null
+        Throwable $previous = null
     ) {
         parent::__construct(
             sprintf('Could not find definition for %s.', $key),
