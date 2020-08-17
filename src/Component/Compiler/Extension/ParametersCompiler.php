@@ -38,22 +38,9 @@ class ParametersCompiler extends AbstractServiceCompilerExtension
             $this->getParameters()
         )['services'];
 
-        $serviceKey = $this->getKey();
-        $parameters = $services[$serviceKey];
-        $newServices = $services;
-        unset($newServices['parameters']);
-
-        $return = array_merge(
-            $this->layerParameters(
-                $newServices,
-                $parameters
-            ),
-            [$serviceKey => $parameters]
-        );
-
         return $this->postCompile(
             $services,
-            $return,
+            $services,
             $this->getParameters()
         )['return'];
     }
@@ -73,30 +60,5 @@ class ParametersCompiler extends AbstractServiceCompilerExtension
         }
 
         return $prepared;
-    }
-
-    /**
-     * Layers the parameters over the service.
-     *
-     * @param array $services
-     * @param array $parameters
-     *
-     * @return array
-     */
-    private function layerParameters(array $services, array $parameters): array
-    {
-        foreach ($services as &$service) {
-            if (is_string($service)) {
-                foreach ($parameters as $key => $parameter) {
-                    if ($service === $key) {
-                        $service = $parameter;
-                    }
-                }
-            } elseif (is_array($service)) {
-                $service = $this->layerParameters($service, $parameters);
-            }
-        }
-
-        return $services;
     }
 }

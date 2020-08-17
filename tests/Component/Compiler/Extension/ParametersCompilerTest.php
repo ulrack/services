@@ -82,7 +82,6 @@ class ParametersCompilerTest extends TestCase
      * @return void
      *
      * @covers ::compile
-     * @covers ::layerParameters
      */
     public function testCompile(): void
     {
@@ -109,7 +108,7 @@ class ParametersCompilerTest extends TestCase
             [
                 'parameters' => ['@{parameters.my-parameter}' => 'foo'],
                 'not-parameters' => [
-                    ['foo' => 'foo']
+                    ['foo' => '@{parameters.my-parameter}']
                 ]
             ],
             $result
