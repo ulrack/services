@@ -99,9 +99,14 @@ class ServicesFactory extends AbstractServiceFactoryExtension
                 $parameterValue = $parameterAnalysis['default'];
 
                 if (isset($service['parameters'][$parameterName])) {
-                    $parameterValue = $this->resolveReference(
+                    $newValue = $this->resolveReference(
                         $service['parameters'][$parameterName]
                     );
+
+                    while ($newValue !== $parameterValue) {
+                        $parameterValue = $newValue;
+                        $newValue = $this->resolveReference($parameterValue);
+                    }
                 }
 
                 $parameters[$parameterName] = $parameterValue;
