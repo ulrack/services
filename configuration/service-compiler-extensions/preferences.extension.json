@@ -13,11 +13,11 @@
         "properties": {
             "preference": {
                 "type": "string",
-                "pattern": "^(\\\\[A-z]+)+$"
+                "pattern": "^(\\\\[A-z0-9]+)+$"
             },
             "for": {
                 "type": "string",
-                "pattern": "^(\\\\[A-z]+)+$"
+                "pattern": "^(\\\\[A-z0-9]+)+$"
             }
         },
         "required": ["preference", "for"]
