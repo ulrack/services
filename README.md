@@ -94,6 +94,10 @@ In order to add logic to the compiler, extensions need to be added.
 To support services, the [ServicesCompiler](src/Component/Compiler/Extension/ServicesCompiler.php) can be used.
 Extensions are required to implement the [AbstractServiceCompilerExtension](src/Common/AbstractServiceCompilerExtension.php).
 
+If the services are already in an optimal state, the
+[PassThroughCompiler](src/Component/Compiler/Extension/PassThroughCompiler.php)
+can also be chosen.
+
 To add the ServicesCompiler, use the following snippet:
 
 ```php

@@ -99,13 +99,13 @@ class ServicesFactory extends AbstractServiceFactoryExtension
                 $parameterValue = $parameterAnalysis['default'];
 
                 if (isset($service['parameters'][$parameterName])) {
-                    $newValue = $this->resolveReference(
+                    $newValue = $this->resolveReferences(
                         $service['parameters'][$parameterName]
                     );
 
                     while ($newValue !== $parameterValue) {
                         $parameterValue = $newValue;
-                        $newValue = $this->resolveReference($parameterValue);
+                        $newValue = $this->resolveReferences($parameterValue);
                     }
                 }
 
@@ -136,27 +136,5 @@ class ServicesFactory extends AbstractServiceFactoryExtension
         }
 
         throw new DefinitionNotFoundException($serviceKey);
-    }
-
-    /**
-     * Resolves a reference to another service if applicable.
-     *
-     * @param mixed $value
-     *
-     * @return mixed
-     */
-    private function resolveReference($value)
-    {
-        if (is_string($value) && $this->isReference($value)) {
-            $value = $this->superCreate(trim($value, '@{}'));
-        }
-
-        if (is_array($value)) {
-            foreach ($value as $key => $item) {
-                $value[$key] = $this->resolveReference($item);
-            }
-        }
-
-        return $value;
     }
 }

@@ -211,4 +211,26 @@ abstract class AbstractServiceFactoryExtension implements ServiceFactoryExtensio
     {
         return $this->serviceFactory->create($service);
     }
+
+    /**
+     * Resolves references in an object to other services if applicable.
+     *
+     * @param mixed $value
+     *
+     * @return mixed
+     */
+    public function resolveReferences($value)
+    {
+        if (is_string($value) && $this->isReference($value)) {
+            $value = $this->superCreate(trim($value, '@{}'));
+        }
+
+        if (is_array($value)) {
+            foreach ($value as $key => $item) {
+                $value[$key] = $this->resolveReferences($item);
+            }
+        }
+
+        return $value;
+    }
 }

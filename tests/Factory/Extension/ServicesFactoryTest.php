@@ -98,7 +98,6 @@ class ServicesFactoryTest extends TestCase
      * @return void
      *
      * @covers ::create
-     * @covers ::resolveReference
      *
      * @dataProvider servicesProvider
      */
