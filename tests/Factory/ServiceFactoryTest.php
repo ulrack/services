@@ -34,6 +34,7 @@ class ServiceFactoryTest extends TestCase
      * @covers ::addHook
      * @covers ::getHooks
      * @covers ::getExtension
+     * @covers ::invokeOnHooks
      */
     public function testCreate(): void
     {
@@ -53,7 +54,7 @@ class ServiceFactoryTest extends TestCase
         );
 
         $subject->addExtension('parameters', ParametersFactory::class, []);
-        $subject->addHook('parameters', FactoryHook::class, 0, []);
+        $subject->addHook('global', FactoryHook::class, 0, []);
 
         $this->assertEquals('foo', $subject->create('parameters.my-parameter'));
 

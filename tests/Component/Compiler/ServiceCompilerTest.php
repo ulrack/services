@@ -24,6 +24,7 @@ class ServiceCompilerTest extends TestCase
     /**
      * @return void
      *
+     * @covers ::invokeOnHooks
      * @covers ::addExtension
      * @covers ::addHook
      * @covers ::compile
@@ -44,7 +45,7 @@ class ServiceCompilerTest extends TestCase
         );
 
         $subject->addExtension('foo', ParametersCompiler::class, 0);
-        $subject->addHook('foo', CompilerHook::class, 0, []);
+        $subject->addHook('global', CompilerHook::class, 0, []);
 
         $result = $subject->compile();
         $this->assertIsArray($result);

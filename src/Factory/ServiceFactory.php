@@ -191,6 +191,26 @@ class ServiceFactory implements ServiceFactoryInterface
     }
 
     /**
+     * Invokes the defined connected hooks.
+     *
+     * @param string $method
+     * @param array $input
+     *
+     * @return array
+     */
+    private function invokeOnHooks(string $method, array $input): array
+    {
+        foreach ($this->getHooks('global') as $hook) {
+            $input = array_merge(
+                $input,
+                call_user_func_array([$hook, $method], $input)
+            );
+        }
+
+        return $input;
+    }
+
+    /**
      * Retrieve the interpreted value of a service.
      *
      * @param string $key
@@ -207,7 +227,20 @@ class ServiceFactory implements ServiceFactoryInterface
         ) : $key;
 
         if (isset($this->extensions[$serviceKey])) {
-            return $this->extensions[$serviceKey]->create($key);
+            return $this->invokeOnHooks(
+                'postCreate',
+                [
+                    'serviceKey' => $this->invokeOnHooks(
+                        'preCreate',
+                        [
+                            'serviceKey' => $key,
+                            'parameters' => ['key' => $serviceKey]
+                        ]
+                    )['serviceKey'],
+                    'return' => $this->extensions[$serviceKey]->create($key),
+                    'parameters' => ['key' => $serviceKey]
+                ]
+            )['return'];
         }
 
         throw new ServiceNotFoundException($key);

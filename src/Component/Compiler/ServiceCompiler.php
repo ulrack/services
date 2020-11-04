@@ -169,6 +169,26 @@ class ServiceCompiler implements ServiceCompilerInterface
     }
 
     /**
+     * Invokes the defined connected hooks.
+     *
+     * @param string $method
+     * @param array $input
+     *
+     * @return array
+     */
+    private function invokeOnHooks(string $method, array $input): array
+    {
+        foreach ($this->getHooks('global') as $hook) {
+            $input = array_merge(
+                $input,
+                call_user_func_array([$hook, $method], $input)
+            );
+        }
+
+        return $input;
+    }
+
+    /**
      * Compiles the services and returns the compiled services.
      *
      * @return array
@@ -197,6 +217,12 @@ class ServiceCompiler implements ServiceCompilerInterface
             }
         }
 
+        $inputServices = $services;
+        $services = $this->invokeOnHooks(
+            'preCompile',
+            ['services' => $services, 'parameters' => []]
+        )['services'];
+
         foreach ($this->extensions as $extensionSet) {
             foreach ($extensionSet as $extension) {
                 $services = $extension->compile($services);
@@ -206,6 +232,13 @@ class ServiceCompiler implements ServiceCompilerInterface
         $this->serviceStorage->set(static::STORAGE_COMPILED_KEY, true);
         $this->serviceStorage->set(static::STORAGE_SERVICES_KEY, $services);
 
-        return $services;
+        return $this->invokeOnHooks(
+            'postCompile',
+            [
+                'services' => $inputServices,
+                'return' => $services,
+                'parameters' => []
+            ]
+        )['return'];
     }
 }
