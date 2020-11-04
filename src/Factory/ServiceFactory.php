@@ -151,7 +151,8 @@ class ServiceFactory implements ServiceFactoryInterface
                         'internalServices' => [
                             'object-factory' => $this->objectFactory,
                             'class-analyser' => $this->classAnalyser,
-                            'method-reflector' => $this->methodReflector
+                            'method-reflector' => $this->methodReflector,
+                            'service-factory' => $this
                         ]
                     ]
                 );
