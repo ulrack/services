@@ -70,6 +70,13 @@ class ServiceFactory implements ServiceFactoryInterface
     private $hooks = [];
 
     /**
+     * Contains the template parameters.
+     *
+     * @var array
+     */
+    private $templateParameters = [];
+
+    /**
      * Constructor.
      *
      * @param ServiceCompilerInterface $serviceCompiler
@@ -215,11 +222,16 @@ class ServiceFactory implements ServiceFactoryInterface
      * Retrieve the interpreted value of a service.
      *
      * @param string $key
+     * @param array $parameters
      *
      * @return mixed
      */
-    public function create(string $key)
+    public function create(string $key, array $parameters = [])
     {
+        if (count($parameters) > 0) {
+            $this->templateParameters = $parameters;
+        }
+
         $firstDot = strpos($key, '.');
         $serviceKey = $firstDot !== false ? substr(
             $key,
@@ -227,7 +239,26 @@ class ServiceFactory implements ServiceFactoryInterface
             $firstDot
         ) : $key;
 
+        if ($serviceKey === 'template') {
+            $templateKey = substr(
+                $key,
+                $firstDot + 1
+            );
+
+            if (isset($this->templateParameters[$templateKey])) {
+                return $this->templateParameters[$templateKey];
+            }
+        }
+
         if (isset($this->extensions[$serviceKey])) {
+            $return = $this->extensions[$serviceKey]->create(
+                $key
+            );
+
+            if (count($parameters) > 0) {
+                $this->templateParameters = [];
+            }
+
             return $this->invokeOnHooks(
                 'postCreate',
                 [
@@ -235,11 +266,15 @@ class ServiceFactory implements ServiceFactoryInterface
                         'preCreate',
                         [
                             'serviceKey' => $key,
-                            'parameters' => ['key' => $serviceKey]
+                            'parameters' => [
+                                'key' => $serviceKey
+                            ]
                         ]
                     )['serviceKey'],
-                    'return' => $this->extensions[$serviceKey]->create($key),
-                    'parameters' => ['key' => $serviceKey]
+                    'return' => $return,
+                    'parameters' => [
+                        'key' => $serviceKey
+                    ]
                 ]
             )['return'];
         }

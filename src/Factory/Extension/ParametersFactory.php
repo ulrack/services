@@ -70,7 +70,7 @@ class ParametersFactory extends AbstractServiceFactoryExtension
         if (isset($parameters[$serviceKey])) {
             return $this->postCreate(
                 $serviceKey,
-                $parameters[$serviceKey],
+                $this->resolveReferences($parameters[$serviceKey]),
                 $this->getParameters()
             )['return'];
         }

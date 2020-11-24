@@ -42,7 +42,7 @@ class ServiceFactoryTest extends TestCase
         $serviceCompiler->expects(static::once())
             ->method('compile')
             ->willReturn(
-                ['parameters' => ['@{parameters.my-parameter}' => 'foo']]
+                ['parameters' => ['@{parameters.my-parameter}' => '@{template.foo}']]
             );
 
         $classAnalyser = new ClassAnalyser(new ObjectStorage());
@@ -56,7 +56,7 @@ class ServiceFactoryTest extends TestCase
         $subject->addExtension('parameters', ParametersFactory::class, []);
         $subject->addHook('global', FactoryHook::class, 0, []);
 
-        $this->assertEquals('foo', $subject->create('parameters.my-parameter'));
+        $this->assertEquals('bar', $subject->create('parameters.my-parameter', ['foo' => 'bar']));
 
         $this->assertInstanceOf(
             ServiceFactoryExtensionInterface::class,

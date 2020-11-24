@@ -13,10 +13,11 @@ interface ServiceFactoryInterface
      * Retrieve the interpreted value of a service.
      *
      * @param string $key
+     * @param array $parameters
      *
      * @return mixed
      */
-    public function create(string $key);
+    public function create(string $key, array $parameters = []);
 
     /**
      * Adds an extension to the service factory.

@@ -5,6 +5,7 @@
  * See LICENSE for license details.
  */
 
+use Ulrack\Services\Common\UlrackServicesPackage;
 use GrizzIt\Configuration\Component\Configuration\PackageLocator;
 
-PackageLocator::registerLocation(__DIR__, 'Ulrack_Services');
+PackageLocator::registerLocation(__DIR__, UlrackServicesPackage::PACKAGE_NAME);
