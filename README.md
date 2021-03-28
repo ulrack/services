@@ -1,3 +1,5 @@
+# DEPRECATION NOTICE: this package has been moved and improved at [grizz-it/services](https://github.com/grizz-it/services)
+
 [![Build Status](https://travis-ci.com/ulrack/services.svg?branch=master)](https://travis-ci.com/ulrack/services)
 
 # Ulrack Services
